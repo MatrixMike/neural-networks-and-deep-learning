@@ -52,24 +52,24 @@ class DeepAutoencoder(Network):
         autoencoder, and so on.  ``eta[-1]`` is the learning rate used
         for the final stage of fine-tuning.
         """
-        print "\nTraining a %s deep autoencoder" % (
-            "-".join([str(j) for j in self.sizes]),)
+        print("\nTraining a %s deep autoencoder" % (
+            "-".join([str(j) for j in self.sizes]),))
         training_data = double(training_data)
         cur_training_data = training_data[::]
         for j in range(len(self.layers)-1):
-            print "\nTraining the %s-%s-%s nested autoencoder" % (
-                self.layers[j], self.layers[j+1], self.layers[j])
-            print "%s epochs, mini-batch size %s, eta = %s, lambda = %s" % (
-                epochs[j], mini_batch_size, eta[j], lmbda[j])
+            print("\nTraining the %s-%s-%s nested autoencoder" % (
+                self.layers[j], self.layers[j+1], self.layers[j]))
+            print("%s epochs, mini-batch size %s, eta = %s, lambda = %s" % (
+                epochs[j], mini_batch_size, eta[j], lmbda[j]))
             self.train_nested_autoencoder(
                 j, cur_training_data, epochs[j], mini_batch_size, eta[j],
                 lmbda[j])
             cur_training_data = [
                 (sigmoid_vec(np.dot(net.weights[0], x)+net.biases[0]),)*2
                 for (x, _) in cur_training_data]
-        print "\nFine-tuning network weights with backpropagation"
-        print "%s epochs, mini-batch size %s, eta = %s, lambda = %s" % (
-                epochs[-1], mini_batch_size, eta[-1], lmbda[-1])
+        print("\nFine-tuning network weights with backpropagation")
+        print("%s epochs, mini-batch size %s, eta = %s, lambda = %s" % (
+                epochs[-1], mini_batch_size, eta[-1], lmbda[-1]))
         self.SGD(training_data, epochs[-1], mini_batch_size, eta[-1],
                  lmbda[-1])
 

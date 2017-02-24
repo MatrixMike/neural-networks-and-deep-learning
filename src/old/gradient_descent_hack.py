@@ -60,11 +60,11 @@ def gradient_descent(cost, eta, n):
     ``cost`` function took at different iterations."""
     w = np.random.uniform(-1, 1, 9) # initialize weights randomly
     costs = []
-    for j in xrange(n):
+    for j in range(n):
         c = cost(w)
-        print "Current cost: {0:.3f}".format(c)
+        print("Current cost: {0:.3f}".format(c))
         costs.append(c)
-        gradient = [partial(cost, k, w) for k in xrange(9)]
+        gradient = [partial(cost, k, w) for k in range(9)]
         w = np.array([wt-eta*d for wt, d in zip(w, gradient)])
     return w, costs
 
@@ -74,8 +74,8 @@ def main():
     final value of the cost function, the final weights, and plots a
     graph of cost as a function of iteration."""
     w, costs = gradient_descent(cost, 0.1, 10000)
-    print "\nFinal cost: {0:.3f}".format(cost(w))
-    print "\nFinal weights: %s" % w
+    print("\nFinal cost: {0:.3f}".format(cost(w)))
+    print("\nFinal weights: %s" % w)
     plt.plot(np.array(costs))
     plt.xlabel('iteration')
     plt.ylabel('cost')

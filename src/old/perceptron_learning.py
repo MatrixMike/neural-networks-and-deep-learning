@@ -26,7 +26,7 @@ class Perceptron(object):
         # inputs it is: [np.array([0, 0, 0]), np.array([0, 0, 1]), ...]
         self.inputs = [np.array([int(y)
                         for y in bin(x).lstrip("0b").zfill(num_inputs)])
-                       for x in xrange(2**num_inputs)]
+                       for x in range(2**num_inputs)]
 
     def output(self, x):
         """ Return the output (0 or 1) from the perceptron, with input
@@ -44,17 +44,17 @@ class Perceptron(object):
         number_of_errors = -1
         while number_of_errors != 0:
             number_of_errors = 0
-            print "Beginning iteration"
-            print "Bias: {:.3f}".format(self.bias)
-            print "Weights:", ", ".join(
-                "{:.3f}".format(wt) for wt in self.weights)
+            print("Beginning iteration")
+            print("Bias: {:.3f}".format(self.bias))
+            print("Weights:", ", ".join(
+                "{:.3f}".format(wt) for wt in self.weights))
             for x in self.inputs:
                 error = f(x)-self.output(x)
                 if error:
                     number_of_errors += 1
                     self.bias = self.bias+eta*error
                     self.weights = self.weights+eta*error*x
-            print "Number of errors:", number_of_errors, "\n"
+            print("Number of errors:", number_of_errors, "\n")
 
 def f(x):
     """ Target function for the perceptron learning algorithm.  I've

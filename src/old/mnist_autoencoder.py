@@ -65,19 +65,19 @@ def classifier(hidden_units, n_unlabeled_inputs, n_labeled_inputs):
     """
     training_data, test_inputs, actual_test_results = \
         mnist_loader.load_data_nn()
-    print "\nUsing pretraining and %s items of unlabeled data" %\
-        n_unlabeled_inputs
+    print("\nUsing pretraining and %s items of unlabeled data" %\
+        n_unlabeled_inputs)
     net_ae = train_autoencoder(hidden_units, training_data[:n_unlabeled_inputs])
     net_c = Network([784, hidden_units, 10])
     net_c.biases = net_ae.biases[:1]+[np.random.randn(10, 1)/np.sqrt(10)]
     net_c.weights = net_ae.weights[:1]+\
         [np.random.randn(10, hidden_units)/np.sqrt(10)]
     net_c.SGD(training_data[-n_labeled_inputs:], 300, 10, 0.01, 0.05)
-    print "Result on test data: %s / %s" % (
-        net_c.evaluate(test_inputs, actual_test_results), len(test_inputs))
-    print "Training a network with %s items of training data" % n_labeled_inputs
+    print("Result on test data: %s / %s" % (
+        net_c.evaluate(test_inputs, actual_test_results), len(test_inputs)))
+    print("Training a network with %s items of training data" % n_labeled_inputs)
     net = Network([784, hidden_units, 10])
     net.SGD(training_data[-n_labeled_inputs:], 300, 10, 0.01, 0.05)
-    print "Result on test data: %s / %s" % (
-        net.evaluate(test_inputs, actual_test_results), len(test_inputs))
+    print("Result on test data: %s / %s" % (
+        net.evaluate(test_inputs, actual_test_results), len(test_inputs)))
     return net_c
